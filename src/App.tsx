@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
 
-// Update this once the interpret app is deployed to its public domain
-const HI_RESULTS_URL = 'https://horizonal-interpretability.vercel.app/results'
+const HI_RESULTS_URL = 'https://www.ai-interpretability.com/results'
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp: Variants = {
