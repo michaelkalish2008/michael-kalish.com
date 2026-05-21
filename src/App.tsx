@@ -509,14 +509,33 @@ function Speaking() {
             Writing &amp; Media
           </p>
           <div className="space-y-5">
-            <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 flex items-start gap-3">
-              <ExternalLink size={16} className="text-indigo-400 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-white text-sm font-medium mb-0.5">Substack</p>
-                <a href="#" className="text-slate-500 text-xs hover:text-indigo-400 transition-colors">
-                  Coming soon →
-                </a>
+            <div className="rounded-xl border border-indigo-500/25 bg-indigo-500/5 p-4">
+              <div className="flex items-start justify-between gap-2 mb-3">
+                <div>
+                  <p className="text-white text-sm font-semibold">AI Interpretability</p>
+                  <a
+                    href="https://readysetgo.substack.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-400 text-xs hover:text-indigo-300 transition-colors"
+                  >
+                    readysetgo.substack.com →
+                  </a>
+                </div>
+                <ExternalLink size={14} className="text-indigo-500 shrink-0 mt-0.5" />
               </div>
+              <ul className="space-y-1.5">
+                {[
+                  'Transformer Architecture and the Limits of Propositional Assumptions',
+                  'Language & Vector Space: What Merleau-Ponty Reveals About LLMs',
+                  'LLMs and Critical Thinking: An Inauthentic Phenomenon for Authentic Discovery',
+                ].map(title => (
+                  <li key={title} className="flex items-start gap-1.5">
+                    <span className="text-indigo-500/60 mt-1 shrink-0 text-[10px]">◆</span>
+                    <span className="text-slate-400 text-xs leading-snug">{title}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
               <p className="text-xs text-amber-400 font-semibold tracking-widest uppercase mb-2">
@@ -598,8 +617,13 @@ function Contact() {
       {/* Footer */}
       <div className="max-w-6xl mx-auto mt-20 pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-600 text-xs">
         <span>© 2026 Michael Kalish</span>
-        <a href="#" className="hover:text-slate-400 transition-colors">
-          Substack →
+        <a
+          href="https://readysetgo.substack.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-slate-400 transition-colors"
+        >
+          AI Interpretability on Substack →
         </a>
       </div>
     </section>
