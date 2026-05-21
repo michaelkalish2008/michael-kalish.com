@@ -353,7 +353,9 @@ function Work() {
                   Explore Live →
                 </a>
                 <a
-                  href="#"
+                  href="https://github.com/michaelkalish2008"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-colors duration-200"
                 >
                   <Code size={15} />
