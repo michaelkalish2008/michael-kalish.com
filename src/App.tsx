@@ -144,7 +144,7 @@ function Hero() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors duration-200 text-sm"
           >
-            Explore My Research →
+            Explore ai-interpretability.com →
           </a>
           <a
             href="#contact"
@@ -318,19 +318,29 @@ function Work() {
               <span className="inline-block text-xs font-semibold tracking-widest text-indigo-400 uppercase mb-3">
                 Research · Open Source
               </span>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight">
-                Horizonal Interpretability
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1 tracking-tight">
+                AI Interpretability
               </h3>
+              <a
+                href="https://www.ai-interpretability.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 transition-colors mb-4"
+              >
+                <Globe size={11} />
+                ai-interpretability.com
+              </a>
               <p className="text-slate-400 text-sm font-medium mb-4">
                 Distribution-native behavioral analysis for language models
               </p>
-              <p className="text-slate-400 leading-relaxed mb-6 text-sm md:text-base">
-                A framework for profiling LLM behavior by reading the full
-                probability distribution at every generation step — not just
-                what the model said, but what it <em className="text-slate-300">considered</em>.
-                Reveals patterns invisible to weight-level analysis: output
-                entropy, I/O correlation, sensitivity to paraphrase, and
-                generation stability across 8 distinct prompt regimes.
+              <p className="text-slate-400 leading-relaxed mb-2 text-sm md:text-base">
+                An independent research site exploring AI interpretability through behavioral
+                analysis. The current featured framework is the{' '}
+                <span className="text-slate-300 font-medium">Horizonal Interpretability Framework (HIF)</span>
+                {' '}— profiling LLMs by reading the full probability distribution at every
+                generation step. Reveals patterns invisible to weight-level analysis: output
+                entropy, I/O correlation, sensitivity to paraphrase, and generation stability
+                across 8 distinct prompt regimes.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {tags1.map(t => (
@@ -349,7 +359,7 @@ function Work() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors duration-200"
                 >
-                  Explore Live →
+                  Explore Results →
                 </a>
                 <a
                   href="https://github.com/michaelkalish2008"
