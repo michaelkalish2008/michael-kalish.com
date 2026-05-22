@@ -240,8 +240,7 @@ function About() {
           <img
             src="/profile.jpg"
             alt="Michael Kalish"
-            className="w-full rounded-2xl object-cover object-top"
-            style={{ maxHeight: '420px' }}
+            className="w-full rounded-2xl object-contain"
           />
           <motion.div
             className="grid grid-cols-2 gap-4"
