@@ -16,6 +16,7 @@ function Nav() {
   const links = [
     { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
+    { label: 'Writing', href: '#writing' },
     { label: 'Speaking', href: '#speaking' },
     { label: 'Contact', href: '#contact' },
   ]
@@ -463,6 +464,136 @@ function Work() {
   )
 }
 
+// ─── Writing ──────────────────────────────────────────────────────────────────
+const writingArticles = [
+  {
+    title: 'Transformer Architecture and the Limits of Propositional Assumptions',
+    subtitle: 'A phenomenological interpretation',
+    date: 'Jan 2026',
+    tag: 'Philosophy of AI',
+    description: 'Why transformer architecture succeeds precisely by rejecting propositional logic — and why language was already a compression of high-dimensional being-in-the-world before LLMs arrived.',
+    url: 'https://readysetgo.substack.com/p/against-atomism',
+  },
+  {
+    title: 'Language & Vector Space: What Merleau-Ponty Reveals About LLMs',
+    subtitle: 'An existential phenomenology perspective',
+    date: 'Jun 2025',
+    tag: 'Philosophy of AI',
+    description: "Merleau-Ponty's account of perception explains what the numbers in vector space actually represent — meaning-vectors as vortices, not points — and why hallucinations are structural, not accidental.",
+    url: 'https://readysetgo.substack.com/p/language-vector-space-what-merleau-ponty-reveals-about-llms-2b18aef32c72',
+  },
+  {
+    title: 'LLMs and Critical Thinking: An Inauthentic Phenomenon for Authentic Discovery',
+    subtitle: 'An existential phenomenological perspective',
+    date: 'May 2025',
+    tag: 'Philosophy of AI',
+    description: "Heidegger's They, they-self, and falling applied to LLMs. The model is a personified derivative of the anonymous They — and how we interact with it determines whether we fall further in, or find a path out.",
+    url: 'https://readysetgo.substack.com/p/llms-and-critical-thinking-an-inauthentic-phenomenon-for-authentic-discovery-f2d473e2d033',
+  },
+  {
+    title: 'A Review of "Why Language Models Hallucinate" (OpenAI)',
+    subtitle: 'A thought-provoking paper with significant caveats',
+    date: 'Sep 2025',
+    tag: 'Critical Reading',
+    description: "What the paper gets right (evaluation frameworks penalizing \"I don't know\" reinforce hallucination), what it gets wrong (the IIV threshold assumption), and what it leaves unexplained.",
+    url: 'https://readysetgo.substack.com/p/a-review-of-why-language-models-hallucinate',
+  },
+  {
+    title: 'A High-Level, Step-by-Step Overview of "Attention Is All You Need"',
+    subtitle: 'A technical foundation',
+    date: 'Jun 2025',
+    tag: 'Technical',
+    description: 'A semi-technical walkthrough of transformer architecture — tokenization, embeddings, positional encodings, multi-head attention, and the Goldilocks problem.',
+    url: 'https://readysetgo.substack.com/p/a-high-level-step-by-step-overview-of-attention-is-all-you-need-a857b747329c',
+  },
+  {
+    title: 'Read This Before Learning Data Science',
+    subtitle: '',
+    date: '',
+    tag: 'Orientation',
+    description: 'An orienting perspective before diving into the technical and philosophical deep end of machine learning.',
+    url: 'https://readysetgo.substack.com/p/read-this-before-learning-data-science',
+  },
+]
+
+const tagColors: Record<string, string> = {
+  'Philosophy of AI': 'bg-violet-500/10 text-violet-400 border-violet-500/20',
+  'Critical Reading': 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  'Technical':        'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+  'Orientation':      'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+}
+
+function Writing() {
+  return (
+    <section id="writing" className="py-28 px-6 bg-slate-900/30">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mb-10"
+        >
+          <p className="text-xs font-semibold tracking-[0.2em] text-indigo-400 uppercase mb-4">
+            Writing
+          </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+              AI Interpretability on Substack
+            </h2>
+            <a
+              href="https://readysetgo.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 transition-colors shrink-0 pb-1"
+            >
+              <ExternalLink size={12} />
+              Follow on Substack
+            </a>
+          </div>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          {writingArticles.map((article, i) => (
+            <motion.a
+              key={article.url}
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: (i % 2) * 0.08 } } }}
+              className="group rounded-xl border border-slate-800 bg-slate-900 hover:border-slate-700 p-5 flex flex-col gap-3 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className={`text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full border ${tagColors[article.tag] ?? tagColors['Technical']}`}>
+                    {article.tag}
+                  </span>
+                  {article.date && (
+                    <span className="text-xs text-slate-600">{article.date}</span>
+                  )}
+                </div>
+                <ExternalLink size={13} className="text-slate-700 group-hover:text-slate-500 transition-colors shrink-0 mt-0.5" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors leading-snug mb-1">
+                  {article.title}
+                </h3>
+                {article.subtitle && (
+                  <p className="text-xs text-slate-600 italic">{article.subtitle}</p>
+                )}
+              </div>
+              <p className="text-xs text-slate-500 leading-relaxed">{article.description}</p>
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Speaking & Writing ───────────────────────────────────────────────────────
 function Speaking() {
   return (
@@ -639,6 +770,7 @@ export default function App() {
         <Hero />
         <About />
         <Work />
+        <Writing />
         <Speaking />
         <Contact />
       </main>
