@@ -545,7 +545,7 @@ function Writing() {
               href="https://readysetgo.substack.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 transition-colors shrink-0 pb-1"
+              className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 transition-colors shrink-0 pb-1 no-underline"
             >
               <ExternalLink size={12} />
               Follow on Substack
@@ -564,7 +564,7 @@ function Writing() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: (i % 2) * 0.08 } } }}
-              className="group rounded-xl border border-slate-800 bg-slate-900 hover:border-slate-700 p-5 flex flex-col gap-3 transition-colors"
+              className="group rounded-xl border border-slate-800 bg-slate-900 hover:border-slate-700 p-5 flex flex-col gap-3 transition-colors no-underline"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
@@ -648,7 +648,7 @@ function Speaking() {
                     href="https://readysetgo.substack.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-indigo-400 text-xs hover:text-indigo-300 transition-colors"
+                    className="text-indigo-400 text-xs hover:text-indigo-300 transition-colors no-underline"
                   >
                     readysetgo.substack.com →
                   </a>
@@ -752,7 +752,7 @@ function Contact() {
           href="https://readysetgo.substack.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-slate-400 transition-colors"
+          className="hover:text-slate-400 transition-colors no-underline"
         >
           AI Interpretability on Substack →
         </a>
