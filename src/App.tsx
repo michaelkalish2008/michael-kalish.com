@@ -78,7 +78,25 @@ function Nav() {
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated background blob */}
+      {/* Backdrop photo */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url(/backdrop.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+        }}
+        aria-hidden="true"
+      />
+      {/* Dark gradient overlay — heavier at bottom, lighter at top */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(2,6,23,0.65) 0%, rgba(2,6,23,0.82) 60%, rgba(2,6,23,0.97) 100%)',
+        }}
+        aria-hidden="true"
+      />
+      {/* Subtle indigo glow — kept for color accent */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -87,13 +105,10 @@ function Hero() {
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.08) 50%, transparent 70%)',
+              'radial-gradient(ellipse at center, rgba(99,102,241,0.10) 0%, transparent 70%)',
             filter: 'blur(60px)',
           }}
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.6, 0.9, 0.6],
-          }}
+          animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
@@ -214,27 +229,41 @@ function About() {
           </div>
         </motion.div>
 
-        {/* Right: highlight cards */}
+        {/* Right: photo + highlight cards */}
         <motion.div
-          className="grid grid-cols-2 gap-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
+          variants={fadeUp}
+          className="flex flex-col gap-4"
         >
-          {highlights.map(h => (
-            <motion.div
-              key={h.label}
-              variants={fadeUp}
-              className="rounded-xl border border-slate-800 bg-slate-900 p-5 flex flex-col gap-1"
-            >
-              <span className="text-white font-semibold text-sm">{h.label}</span>
-              <span className="text-slate-500 text-xs leading-snug">{h.sub}</span>
-            </motion.div>
-          ))}
+          <img
+            src="/profile.jpg"
+            alt="Michael Kalish"
+            className="w-full rounded-2xl object-cover object-top"
+            style={{ maxHeight: '420px' }}
+          />
+          <motion.div
+            className="grid grid-cols-2 gap-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
+          >
+            {highlights.map(h => (
+              <motion.div
+                key={h.label}
+                variants={fadeUp}
+                className="rounded-xl border border-slate-800 bg-slate-900 p-5 flex flex-col gap-1"
+              >
+                <span className="text-white font-semibold text-sm">{h.label}</span>
+                <span className="text-slate-500 text-xs leading-snug">{h.sub}</span>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>
