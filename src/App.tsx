@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
 
+const HI_URL = 'https://www.ai-interpretability.com'
 const HI_RESULTS_URL = 'https://www.ai-interpretability.com/results'
+const HI_PAPER_URL = 'https://www.ai-interpretability.com/writing'
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -160,7 +162,7 @@ function Hero() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-colors duration-200 text-sm"
           >
-            Explore ai-interpretability.com →
+            Explore the Research →
           </a>
           <a
             href="#contact"
@@ -201,11 +203,11 @@ function About() {
           </h2>
           <div className="space-y-5 text-slate-400 leading-relaxed">
             <p>
-              I started with philosophy, psychology, and history at UCSB — then
-              spent years teaching high school mathematics. That combination —
-              thinking rigorously about systems, explaining complex ideas to
-              skeptical audiences — turned out to be the right foundation for
-              applied AI.
+              I started with philosophy, psychology, and history at UCSB, then
+              earned a single-subject teaching credential in mathematics. That
+              combination — thinking rigorously about systems, explaining complex
+              ideas to skeptical audiences — turned out to be the right
+              foundation for applied AI.
             </p>
             <p>
               Along the way, I co-won Food Network's{' '}
@@ -299,7 +301,7 @@ function EntropyBar() {
 
 // ─── Work ─────────────────────────────────────────────────────────────────────
 function Work() {
-  const tags1 = ['HuggingFace', 'PyTorch', 'React', 'Entropy Analysis', 'BertViz Attention', 'GPT-2']
+  const tags1 = ['HuggingFace', 'PyTorch', 'Shannon Entropy', 'Nucleus Fraction', 'DistilBERT', 'GPT-2', 'Gemma']
   const tags2 = ['LangChain', 'LLMs', 'Python', 'Education']
   const tags3 = ['RAG', 'LangGraph', 'Agentic AI', 'NLP', 'SQL']
 
@@ -348,10 +350,10 @@ function Work() {
                 Research · Open Source
               </span>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-1 tracking-tight">
-                AI Interpretability
+                Horizonal Interpretability Framework
               </h3>
               <a
-                href="https://www.ai-interpretability.com"
+                href={HI_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 transition-colors mb-4"
@@ -360,16 +362,17 @@ function Work() {
                 ai-interpretability.com
               </a>
               <p className="text-slate-400 text-sm font-medium mb-4">
-                Distribution-native behavioral analysis for language models
+                Reading the behavioral surface of language models — not their weights.
               </p>
               <p className="text-slate-400 leading-relaxed mb-2 text-sm md:text-base">
-                An independent research site exploring AI interpretability through behavioral
-                analysis. The current featured framework is the{' '}
-                <span className="text-slate-300 font-medium">Horizonal Interpretability Framework (HIF)</span>
-                {' '}— profiling LLMs by reading the full probability distribution at every
-                generation step. Reveals patterns invisible to weight-level analysis: output
-                entropy, I/O correlation, sensitivity to paraphrase, and generation stability
-                across 8 distinct prompt regimes.
+                HIF characterizes a model as a function from prompts to output distributions
+                and measures that function systematically — across five metrics, eight prompt
+                regimes, and three models (GPT-2 Small, GPT-2 Medium, Gemma 3 1B IT). Every
+                metric is entropy, derived from entropy, or computed by comparing two entropy
+                traces: Volatility · Dispersion · Sensitivity · Stability · Goldilocks. Per-step
+                nucleus fraction tracks what share of the vocabulary the model needed at each
+                generation step — a direct concentration percentile. Extends to closed models
+                via surrogate scaffold. Full paper and interactive results published at the site.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {tags1.map(t => (
@@ -391,13 +394,21 @@ function Work() {
                   Explore Results →
                 </a>
                 <a
-                  href="https://github.com/michaelkalish2008"
+                  href={HI_PAPER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-indigo-500/40 hover:border-indigo-400 text-indigo-300 hover:text-indigo-200 text-sm font-medium transition-colors duration-200"
+                >
+                  Read the Paper →
+                </a>
+                <a
+                  href="https://github.com/michaelkalish2008/horizonal-interpretability"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-colors duration-200"
                 >
                   <Code size={15} />
-                  View on GitHub
+                  GitHub
                 </a>
               </div>
             </div>
@@ -567,7 +578,7 @@ function Writing() {
           </p>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-              AI Interpretability on Substack
+              Philosophy of AI
             </h2>
             <a
               href="https://readysetgo.substack.com"
@@ -671,7 +682,7 @@ function Speaking() {
             <div className="rounded-xl border border-indigo-500/25 bg-indigo-500/5 p-4">
               <div className="flex items-start justify-between gap-2 mb-3">
                 <div>
-                  <p className="text-white text-sm font-semibold">AI Interpretability</p>
+                  <p className="text-white text-sm font-semibold">Philosophy of AI — Substack</p>
                   <a
                     href="https://readysetgo.substack.com"
                     target="_blank"
@@ -763,7 +774,9 @@ function Contact() {
               LinkedIn
             </a>
             <a
-              href="#"
+              href="https://github.com/michaelkalish2008"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-colors duration-200"
             >
               <Code size={16} />
@@ -782,7 +795,7 @@ function Contact() {
           rel="noopener noreferrer"
           className="hover:text-slate-400 transition-colors no-underline"
         >
-          AI Interpretability on Substack →
+          readysetgo.substack.com →
         </a>
       </div>
     </section>
