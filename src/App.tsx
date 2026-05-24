@@ -271,30 +271,116 @@ function About() {
   )
 }
 
-// ─── Entropy bar visual ───────────────────────────────────────────────────────
-function EntropyBar() {
-  // Simulated entropy trace across generation steps
-  const bars = [
-    0.4, 0.55, 0.7, 0.85, 0.6, 0.45, 0.9, 0.75, 0.5, 0.65,
-    0.8, 0.35, 0.6, 0.95, 0.7, 0.55, 0.4, 0.75, 0.88, 0.5,
-    0.62, 0.78, 0.42, 0.68, 0.82, 0.56, 0.44, 0.72, 0.66, 0.58,
-  ]
+// ─── Einstein trace ───────────────────────────────────────────────────────────
+// Real GPT-2 teacher-forced values for "Albert Einstein won the Nobel Prize
+// for his theory of relativity". nucleus = p90 nucleus size in tokens.
+// "his" = divergence point (model wanted "Physics" at 56%);
+// "relativity" = confident-wrong (75% probability, but factually incorrect).
+const EINSTEIN = [
+  { word: 'Albert',     bits: 0.00,   nucleus: 1,    risk: 'confident'    },
+  { word: 'Einstein',  bits: 10.995, nucleus: 2047, risk: 'uncertain'    },
+  { word: 'won',        bits: 7.316,  nucleus: 159,  risk: 'uncertain'    },
+  { word: 'the',        bits: 4.190,  nucleus: 18,   risk: 'uncertain'    },
+  { word: 'Nobel',      bits: 0.678,  nucleus: 1,    risk: 'confident'    },
+  { word: 'Prize',      bits: 1.144,  nucleus: 3,    risk: 'confident'    },
+  { word: 'for',        bits: 1.825,  nucleus: 2,    risk: 'uncertain'    },
+  { word: 'his',        bits: 2.901,  nucleus: 12,   risk: 'hallucination'},
+  { word: 'theory',     bits: 6.069,  nucleus: 75,   risk: 'uncertain'    },
+  { word: 'of',         bits: 0.866,  nucleus: 2,    risk: 'confident'    },
+  { word: 'relativity', bits: 1.813,  nucleus: 4,    risk: 'hallucination'},
+] as const
+
+type Risk = 'confident' | 'uncertain' | 'hallucination'
+
+const RISK_BAR: Record<Risk, string> = {
+  confident:     'bg-indigo-500',
+  uncertain:     'bg-amber-500',
+  hallucination: 'bg-rose-500',
+}
+const RISK_LABEL: Record<Risk, string> = {
+  confident:     'text-slate-500',
+  uncertain:     'text-amber-600/80',
+  hallucination: 'text-rose-500',
+}
+
+function EinsteinTrace() {
+  const maxBits = 10.995
+  const maxNucleus = 2047
+
   return (
-    <div className="flex items-end gap-[3px] h-20 px-1">
-      {bars.map((h, i) => (
-        <motion.div
-          key={i}
-          className="flex-1 rounded-sm"
-          style={{
-            height: `${h * 100}%`,
-            background: `rgba(99,102,241,${0.4 + h * 0.6})`,
-          }}
-          initial={{ scaleY: 0, originY: 1 }}
-          whileInView={{ scaleY: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: i * 0.02, ease: 'easeOut' }}
-        />
-      ))}
+    <div className="space-y-3">
+      {/* Entropy bars + labels */}
+      <div>
+        <div className="flex items-end gap-[3px] h-16">
+          {EINSTEIN.map((t, i) => (
+            <motion.div
+              key={i}
+              className={`flex-1 rounded-sm ${RISK_BAR[t.risk]}`}
+              style={{
+                height: `${Math.max(2, (t.bits / maxBits) * 100)}%`,
+                opacity: 0.55 + (t.bits / maxBits) * 0.45,
+              }}
+              initial={{ scaleY: 0, originY: 1 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: i * 0.04, ease: 'easeOut' }}
+            />
+          ))}
+        </div>
+        <div className="flex gap-[3px] mt-1">
+          {EINSTEIN.map((t, i) => (
+            <div key={i} className="flex-1 overflow-hidden">
+              <span className={`block text-center text-[7px] leading-tight truncate ${RISK_LABEL[t.risk]}`}>
+                {t.word}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Nucleus fraction row */}
+      <div>
+        <p className="text-[8px] text-slate-600 uppercase tracking-widest mb-1">
+          p90 nucleus — tokens needed to cover 90% of probability mass
+        </p>
+        <div className="flex items-end gap-[3px] h-6">
+          {EINSTEIN.map((t, i) => (
+            <motion.div
+              key={i}
+              className={`flex-1 rounded-sm ${RISK_BAR[t.risk]}`}
+              style={{
+                height: `${Math.max(4, (t.nucleus / maxNucleus) * 100)}%`,
+                opacity: 0.35 + (t.nucleus / maxNucleus) * 0.5,
+              }}
+              initial={{ scaleY: 0, originY: 1 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: 0.45 + i * 0.04, ease: 'easeOut' }}
+            />
+          ))}
+        </div>
+        <div className="flex gap-[3px] mt-0.5">
+          {EINSTEIN.map((t, i) => (
+            <div key={i} className="flex-1 overflow-hidden">
+              <span className={`block text-center text-[7px] font-mono leading-tight ${
+                t.nucleus === 1 ? 'text-indigo-500' : t.nucleus > 100 ? 'text-rose-500/70' : 'text-slate-600'
+              }`}>
+                {t.nucleus > 999 ? '2k' : t.nucleus}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center gap-4 pt-1 border-t border-slate-800/60">
+        {(['confident', 'uncertain', 'hallucination'] as Risk[]).map(r => (
+          <div key={r} className="flex items-center gap-1">
+            <div className={`w-2 h-2 rounded-sm ${RISK_BAR[r]} opacity-70`} />
+            <span className="text-[8px] text-slate-600">{r}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -413,16 +499,19 @@ function Work() {
               </div>
             </div>
 
-            {/* Entropy visualization */}
+            {/* Einstein trace visualization */}
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold tracking-widest text-slate-500 uppercase">
-                Entropy trace · sample generation
+                Live analysis · GPT-2 · teacher-forced
               </p>
               <div className="rounded-xl bg-slate-950/60 border border-slate-800 p-4">
-                <EntropyBar />
+                <EinsteinTrace />
               </div>
-              <p className="text-xs text-slate-600">
-                Each bar = one generation step. Height ≈ output entropy at that token position.
+              <p className="text-xs text-slate-600 leading-relaxed">
+                <span className="text-rose-500/80">Rose</span> = hallucination token.
+                {' '}<span className="text-slate-400">"his"</span> — model predicted "Physics" at 56%, forced to "his" at 2.7%.
+                {' '}<span className="text-slate-400">"relativity"</span> — 75% confidence, factually wrong.
+                {' '}Bottom row: p90 nucleus size in tokens — how many the model needed to cover 90% of its probability mass.
               </p>
             </div>
           </div>
