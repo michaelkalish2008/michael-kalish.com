@@ -371,7 +371,7 @@ function EinsteinTrace() {
 
 // ─── Work ─────────────────────────────────────────────────────────────────────
 function Work() {
-  const tags1 = ['HuggingFace', 'PyTorch', 'Shannon Entropy', 'Nucleus Fraction', 'DistilBERT', 'GPT-2', 'Gemma']
+  const tags1 = ['HuggingFace', 'PyTorch', 'Shannon Entropy', 'Nucleus Fraction', 'DistilBERT', 'GPT-2', 'Gemma', 'Llama', 'GPT-4.1', 'Gemini']
   const tags2 = ['LangChain', 'LLMs', 'Python', 'Education']
   const tags3 = ['RAG', 'LangGraph', 'Agentic AI', 'NLP', 'SQL']
 
@@ -424,12 +424,13 @@ function Work() {
               <p className="text-zinc-400 leading-relaxed mb-2 text-sm md:text-base">
                 HIF characterizes a model as a function from prompts to output distributions
                 and measures that function systematically — across five metrics, eight prompt
-                regimes, and three models (GPT-2 Small, GPT-2 Medium, Gemma 3 1B IT). Every
-                metric is entropy, derived from entropy, or computed by comparing two entropy
-                traces: Volatility · Dispersion · Sensitivity · Stability · Goldilocks. Per-step
-                nucleus fraction tracks what share of the vocabulary the model needed at each
-                generation step — a direct concentration percentile. Extends to closed models
-                via surrogate scaffold. Full paper and interactive results published at the site.
+                regimes, and six models: GPT-2 Small, GPT-2 Medium, Gemma 3 1B IT, Llama 3.2 1B,
+                GPT-4.1 mini, and Gemini 2.5 Flash. Every metric is entropy, derived from entropy,
+                or computed by comparing two entropy traces: Volatility · Dispersion · Sensitivity ·
+                Stability · Goldilocks. The central finding: high sensitivity to paraphrase is the
+                structural default for open-weight models regardless of scale or fine-tuning — and
+                frontier API models occupy a categorically different behavioral regime. Full paper
+                and interactive results published at the site.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {tags1.map(t => (
