@@ -538,13 +538,12 @@ function Work() {
               Production · Uber
             </span>
             <h3 className="text-xl font-bold text-zinc-100 mb-3 tracking-tight">
-              RAG-Based Legal Intelligence
+              RAG-Based Intelligence Platform
             </h3>
             <p className="text-zinc-400 text-sm leading-relaxed mb-5 flex-1">
-              Lead data scientist for cross-functional team (Engineers, Legal
-              SMEs, Community Ops) building and deploying RAG-based agentic
-              solutions for global support ticket labeling and trending insights
-              for Uber's Legal team.
+              Lead data scientist for cross-functional team (Engineers, SMEs,
+              Community Ops) building and deploying RAG-based agentic solutions
+              for global support ticket labeling and trending insights at Uber.
             </p>
             <div className="flex flex-wrap gap-2">
               {tags3.map(t => (
