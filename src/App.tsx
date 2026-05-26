@@ -677,14 +677,14 @@ function Writing() {
                 <ExternalLink size={13} className="text-zinc-800 group-hover:text-zinc-500 transition-colors shrink-0 mt-0.5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-zinc-300 group-hover:text-zinc-100 transition-colors leading-snug mb-1">
+                <h3 className="text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors leading-snug mb-1">
                   {article.title}
                 </h3>
                 {article.subtitle && (
-                  <p className="text-xs text-zinc-700 italic">{article.subtitle}</p>
+                  <p className="text-xs text-zinc-500 italic">{article.subtitle}</p>
                 )}
               </div>
-              <p className="text-xs text-zinc-600 leading-relaxed">{article.description}</p>
+              <p className="text-xs text-zinc-400 leading-relaxed">{article.description}</p>
             </motion.a>
           ))}
         </div>
