@@ -709,10 +709,15 @@ function Speaking() {
             <div className="border-l-2 border-cyan-500/30 pl-5">
               <p className="text-zinc-100 font-semibold mb-1">Legal Innovators California</p>
               <p className="text-zinc-600 text-xs mb-2">Keynote · June 2025</p>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-zinc-400 text-sm leading-relaxed mb-4">
                 "Building and Deploying RAG-Based Agentic Workflows for Legal
                 Support Ticket Labeling." Non-technical audience.
               </p>
+              <img
+                src="/keynote.jpg"
+                alt="Michael Kalish keynote at Legal Innovators California 2025"
+                className="rounded-xl w-full object-cover max-h-56"
+              />
             </div>
             <div className="border-l-2 border-white/[0.08] pl-5">
               <p className="text-zinc-100 font-semibold mb-1">Uber Tech Talks</p>
