@@ -128,10 +128,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
         >
-          I lead AI initiatives at Uber — from RAG-based production systems to
-          educational infrastructure for 1,000+ data scientists — and do
-          independent research on what language models are actually doing when
-          they generate text.
+          I lead AI initiatives at Uber — from Multi-Agent pipelines and RAG-based production systems to search space optimization to educational infrastructure for 1,000+ data scientists — and do independent research on what language models are actually doing when they generate text.
         </motion.p>
 
         <motion.div
