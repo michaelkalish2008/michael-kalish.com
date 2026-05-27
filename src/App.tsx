@@ -138,7 +138,7 @@ function Hero() {
           transition={{ duration: 0.5, delay: 0.45 }}
         >
           <a
-            href={HI_RESULTS_URL}
+            href={HI_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors duration-200 text-sm"
