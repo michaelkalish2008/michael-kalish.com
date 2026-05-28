@@ -188,7 +188,7 @@ function About() {
             About
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight mb-8">
-            Two hats, worn separately.
+            Michael Kalish
           </h2>
 
           <div className="space-y-6 text-zinc-400 leading-relaxed">
