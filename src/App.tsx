@@ -205,12 +205,12 @@ function About() {
             <div className="border-l-2 border-cyan-500/40 pl-4">
               <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent · Recreational</p>
               <p>
-                Entirely separately, I research what language models are actually doing when they
-                generate text. The Horizonal Interpretability Framework is that research —
-                computational phenomenology applied to transformers. It is nights-and-weekends work,
-                self-funded, and unaffiliated with any employer. Very few people working on
-                transformer interpretability have read Heidegger and Merleau-Ponty seriously.
-                That gap is the opening.
+                I enjoy reading existential phenomenology and applying 20th-century continental
+                philosophy to interpreting Transformer Architecture. The Horizonal Interpretability
+                Framework is that work made rigorous — computational phenomenology applied to
+                transformers. It is nights-and-weekends work, self-funded, and unaffiliated with
+                any employer. Very few people working on transformer interpretability have read
+                Heidegger and Merleau-Ponty seriously. That gap is the opening.
               </p>
             </div>
 
