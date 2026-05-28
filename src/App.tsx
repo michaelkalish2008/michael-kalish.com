@@ -100,14 +100,20 @@ function Hero() {
       />
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <motion.p
-          className="text-xs font-semibold tracking-[0.25em] text-zinc-600 mb-6 uppercase"
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Senior Applied Scientist · AI Enablement · Interpretability
-        </motion.p>
+          <span className="text-xs font-semibold tracking-[0.2em] text-amber-500/70 uppercase px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/5">
+            Applied Data Scientist
+          </span>
+          <span className="text-zinc-700 hidden sm:inline">·</span>
+          <span className="text-xs font-semibold tracking-[0.2em] text-cyan-400/80 uppercase px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5">
+            Independent AI Researcher
+          </span>
+        </motion.div>
 
         <motion.h1
           className="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6"
@@ -118,7 +124,7 @@ function Hero() {
           <span className="text-zinc-100">Building AI at scale.</span>
           <br />
           <span className="bg-gradient-to-r from-cyan-400 to-sky-300 bg-clip-text text-transparent">
-            Researching how to understand it.
+            Philosophizing about it on the side.
           </span>
         </motion.h1>
 
@@ -128,7 +134,9 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
         >
-          I lead AI initiatives at Uber — from Multi-Agent pipelines and RAG-based production systems to search space optimization to educational infrastructure for 1,000+ data scientists — and do independent research on what language models are actually doing when they generate text.
+          Professionally, I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
+          and data science infrastructure at scale. Independently, I research what language models are actually
+          doing when they generate text — through the lens of 20th-century existential phenomenology.
         </motion.p>
 
         <motion.div
@@ -180,34 +188,38 @@ function About() {
             About
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight mb-8">
-            An unusual path to AI.
+            Two hats, worn separately.
           </h2>
-          <div className="space-y-5 text-zinc-400 leading-relaxed">
-            <p>
-              I started with philosophy, psychology, and history at UCSB, then
-              earned a single-subject teaching credential in mathematics. That
-              combination — thinking rigorously about systems, explaining complex
-              ideas to skeptical audiences — turned out to be the right
-              foundation for applied AI.
-            </p>
-            <p>
-              Along the way, I co-won Food Network's{' '}
-              <em className="text-zinc-300">Great Food Truck Race</em> (Series
-              7), was a finalist on{' '}
-              <em className="text-zinc-300">Chopped</em>, and appeared on
-              Netflix's <em className="text-zinc-300">You Are What You Eat</em>
-              . I mention this not as a non-sequitur but because it shaped how I
-              communicate: making technical work legible to any audience is a
-              skill, and I've had unusually good training in it.
-            </p>
-            <p>
-              Today I lead AI and data science work at Uber across ethics,
-              compliance, legal, and security — building RAG-based agentic
-              systems, NLP/ML pipelines, and the educational infrastructure that
-              helps 1,000+ Uber data scientists work with AI effectively. I also
-              do independent research on language model interpretability: what
-              probability distributions reveal about model behavior that weights
-              alone cannot.
+
+          <div className="space-y-6 text-zinc-400 leading-relaxed">
+            <div className="border-l-2 border-amber-500/40 pl-4">
+              <p className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase mb-2">Professional</p>
+              <p>
+                I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
+                and the educational infrastructure that helps 1,000+ data scientists work with AI
+                effectively. My applied work spans ethics, compliance, legal, and security domains.
+                UC Berkeley MIDS, 2025.
+              </p>
+            </div>
+
+            <div className="border-l-2 border-cyan-500/40 pl-4">
+              <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent · Recreational</p>
+              <p>
+                Entirely separately, I research what language models are actually doing when they
+                generate text. The Horizonal Interpretability Framework is that research —
+                computational phenomenology applied to transformers. It is nights-and-weekends work,
+                self-funded, and unaffiliated with any employer. Very few people working on
+                transformer interpretability have read Heidegger and Merleau-Ponty seriously.
+                That gap is the opening.
+              </p>
+            </div>
+
+            <p className="text-sm">
+              I started with philosophy, psychology, and history at UCSB, then a teaching credential
+              in mathematics. Along the way, I co-won Food Network's{' '}
+              <em className="text-zinc-300">Great Food Truck Race</em> (Series 7), was a finalist on{' '}
+              <em className="text-zinc-300">Chopped</em>, and appeared on Netflix's{' '}
+              <em className="text-zinc-300">You Are What You Eat</em>.
             </p>
           </div>
         </motion.div>
@@ -388,7 +400,17 @@ function Work() {
           <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight">
             Selected Projects
           </h2>
+          <p className="text-sm text-zinc-600 mt-3">
+            Independent research and professional work are listed separately below.
+          </p>
         </motion.div>
+
+        {/* Independent Research header */}
+        <div className="flex items-center gap-4 mb-6">
+          <span className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase">Independent Research</span>
+          <div className="flex-1 h-px bg-cyan-500/15" />
+          <span className="text-[10px] text-zinc-700 uppercase tracking-widest">self-funded · unaffiliated</span>
+        </div>
 
         {/* Featured card — Horizonal Interpretability */}
         <motion.div
@@ -485,6 +507,12 @@ function Work() {
             </div>
           </div>
         </motion.div>
+
+        {/* Professional Work header */}
+        <div className="flex items-center gap-4 mt-12 mb-6">
+          <span className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase">Professional Work</span>
+          <div className="flex-1 h-px bg-amber-500/15" />
+        </div>
 
         {/* Two smaller cards */}
         <div className="grid md:grid-cols-2 gap-6">
