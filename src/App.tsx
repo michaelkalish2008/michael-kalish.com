@@ -208,14 +208,12 @@ function About() {
                 I enjoy reading existential phenomenology and applying 20th-century continental
                 philosophy to interpreting Transformer Architecture. The Horizonal Interpretability
                 Framework is that work made rigorous — computational phenomenology applied to
-                transformers. It is nights-and-weekends work, self-funded, and unaffiliated with
-                any employer. Very few people working on transformer interpretability have read
-                Heidegger and Merleau-Ponty seriously. That gap is the opening.
+                transformers.
               </p>
             </div>
 
             <p className="text-sm">
-              I started with philosophy, psychology, and history at UCSB, then a teaching credential
+              I started with philosophy, psychology, and history at UCSB, then completed a teaching credential program
               in mathematics. Along the way, I co-won Food Network's{' '}
               <em className="text-zinc-300">Great Food Truck Race</em> (Series 7), was a finalist on{' '}
               <em className="text-zinc-300">Chopped</em>, and appeared on Netflix's{' '}
