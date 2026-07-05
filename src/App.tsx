@@ -2,10 +2,6 @@ import { useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
 
-const HI_URL = 'https://www.ai-interpretability.com'
-const HI_RESULTS_URL = 'https://www.ai-interpretability.com/results'
-const HI_PAPER_URL = 'https://www.ai-interpretability.com/writing'
-
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 16 },
@@ -135,8 +131,8 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.32 }}
         >
           Professionally, I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
-          and data science infrastructure at scale. Independently, I research what language models are actually
-          doing when they generate text — through the lens of 20th-century existential phenomenology.
+          and data science infrastructure at scale. On the side, I write about what language models are
+          actually doing when they generate text — through the lens of 20th-century existential phenomenology.
         </motion.p>
 
         <motion.div
@@ -146,12 +142,10 @@ function Hero() {
           transition={{ duration: 0.5, delay: 0.45 }}
         >
           <a
-            href={HI_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#writing"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors duration-200 text-sm"
           >
-            Explore the Research →
+            Read the Writing →
           </a>
           <a
             href="#contact"
@@ -206,9 +200,9 @@ function About() {
               <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent · Recreational</p>
               <p>
                 I enjoy reading existential phenomenology and applying 20th-century continental
-                philosophy to interpreting Transformer Architecture. The Horizonal Interpretability
-                Framework is that work made rigorous — computational phenomenology applied to
-                transformers.
+                philosophy to interpreting Transformer Architecture. That started as essays and
+                grew into a rigorous behavioral-measurement research program — now continuing
+                privately, with results shared under NDA.
               </p>
             </div>
 
@@ -421,33 +415,21 @@ function Work() {
           <div className="relative z-10 grid md:grid-cols-2 gap-8 items-start">
             <div>
               <span className="inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase mb-3">
-                Research · Open Source
+                Research · Private
               </span>
               <h3 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-1 tracking-tight">
-                Horizonal Interpretability Framework
+                Behavioral Interpretability Research
               </h3>
-              <a
-                href={HI_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 transition-colors mb-4"
-              >
-                <Globe size={11} />
-                ai-interpretability.com
-              </a>
-              <p className="text-zinc-400 text-sm font-medium mb-4">
+              <p className="text-zinc-400 text-sm font-medium mb-4 mt-3">
                 Reading the behavioral surface of language models — not their weights.
               </p>
               <p className="text-zinc-400 leading-relaxed mb-2 text-sm md:text-base">
-                HIF characterizes a model as a function from prompts to output distributions
-                and measures that function systematically — across five metrics, eight prompt
-                regimes, and six models: GPT-2 Small, GPT-2 Medium, Gemma 3 1B IT, Llama 3.2 1B,
-                GPT-4.1 mini, and Gemini 2.5 Flash. Every metric is entropy, derived from entropy,
-                or computed by comparing two entropy traces: Volatility · Dispersion · Sensitivity ·
-                Stability · Goldilocks. The central finding: high sensitivity to paraphrase is the
-                structural default for open-weight models regardless of scale or fine-tuning — and
-                frontier API models occupy a categorically different behavioral regime. Full paper
-                and interactive results published at the site.
+                A multi-year research program measuring language models from the outside:
+                treating a model as a function from prompts to output distributions and
+                characterizing that function systematically across open-weight and frontier
+                API models. The work began as public philosophy essays, grew into a formal
+                measurement framework, and is now an active private research program.
+                Results and methods are available under NDA.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {tags1.map(t => (
@@ -461,29 +443,10 @@ function Work() {
               </div>
               <div className="flex gap-3 flex-wrap">
                 <a
-                  href={HI_RESULTS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#contact"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium transition-colors duration-200"
                 >
-                  Explore Results →
-                </a>
-                <a
-                  href={HI_PAPER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-cyan-500/30 hover:border-cyan-400/60 text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors duration-200"
-                >
-                  Read the Paper →
-                </a>
-                <a
-                  href="https://github.com/michaelkalish2008/horizonal-interpretability"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-200 text-sm font-medium transition-colors duration-200"
-                >
-                  <Code size={15} />
-                  GitHub
+                  Inquire About the Research →
                 </a>
               </div>
             </div>
@@ -833,8 +796,9 @@ function Contact() {
             Let's work together.
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed mb-10">
-            I'm open to research collaborations, speaking engagements, and
-            advisory conversations around AI enablement and interpretability.
+            I'm open to speaking engagements and advisory conversations around
+            AI enablement and evaluation. For the interpretability research,
+            reach out — results are shared under NDA.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
