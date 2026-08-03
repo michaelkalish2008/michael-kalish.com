@@ -200,9 +200,16 @@ function About() {
               <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent · Recreational</p>
               <p>
                 I enjoy reading existential phenomenology and applying 20th-century continental
-                philosophy to interpreting Transformer Architecture. That started as essays and
-                grew into a rigorous behavioral-measurement research program — now continuing
-                privately, with results shared under NDA.
+                philosophy to interpreting Transformer Architecture. See{' '}
+                <a
+                  href="https://ai-interpretability.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-cyan-400 hover:text-cyan-300 underline underline-offset-4 decoration-cyan-500/40 hover:decoration-cyan-400/70 transition-colors"
+                >
+                  ai-interpretability.com
+                </a>
+                .
               </p>
             </div>
 
