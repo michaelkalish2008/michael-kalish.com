@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Original-resolution source images, kept out of the bundle and out of git.
+raw-assets

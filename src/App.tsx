@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
+import { poetryIntro, poems, type Poem } from './poems'
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -15,6 +16,7 @@ function Nav() {
     { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
     { label: 'Writing', href: '#writing' },
+    { label: 'Poetry', href: '#poetry' },
     { label: 'Speaking', href: '#speaking' },
     { label: 'Contact', href: '#contact' },
   ]
@@ -686,6 +688,195 @@ function Writing() {
   )
 }
 
+// ─── Poetry ───────────────────────────────────────────────────────────────────
+// Content lives in src/content/poems/*.md — one markdown file per work, plus
+// _intro.md for the leading tab. src/poems.ts globs and parses them; nothing is
+// authored here. Poems render with `whitespace-pre-wrap` and no markdown pass,
+// so line breaks and indentation survive exactly as typed.
+
+// A `type: collection` file is a chapbook: its `#` headings became sections, so
+// it reads as a book — preface, index, then the poems in sequence. The index is
+// generated from the headings rather than authored, so it cannot fall out of
+// step with the contents the way a hand-kept table of contents does.
+function Collection({ poem }: { poem: Poem }) {
+  const preface = poem.sections.filter(s => s.isPreface)
+  const contents = poem.sections.filter(s => !s.isPreface)
+
+  // Section ids are namespaced by collection so they cannot collide with the
+  // page's own anchors (`#poetry`) or with another collection's poem titles.
+  const anchor = (id: string) => `${poem.id}--${id}`
+
+  function jumpTo(id: string) {
+    document.getElementById(anchor(id))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <>
+      {preface.map(s => (
+        <section key={s.id} className="mb-10">
+          <h4 className="text-xs font-semibold tracking-[0.2em] text-amber-500/70 uppercase mb-3">
+            {s.title}
+          </h4>
+          <div className="text-sm md:text-[15px] text-zinc-400 leading-relaxed whitespace-pre-wrap max-w-prose">
+            {s.text}
+          </div>
+        </section>
+      ))}
+
+      {/* Generated index */}
+      <nav aria-label={`${poem.title} contents`} className="mb-12 border-y border-white/[0.06] py-5">
+        <p className="text-xs font-semibold tracking-[0.2em] text-zinc-600 uppercase mb-3">
+          Contents
+        </p>
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1.5 list-none p-0 m-0">
+          {contents.map((s, i) => (
+            <li key={s.id} className="flex gap-2 items-baseline">
+              <span className="text-[10px] text-zinc-700 tabular-nums shrink-0 w-5 text-right">
+                {i + 1}
+              </span>
+              <button
+                onClick={() => jumpTo(s.id)}
+                className="text-left text-sm text-zinc-400 hover:text-amber-400 transition-colors"
+              >
+                {s.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* The poems, in sequence */}
+      <div className="space-y-12">
+        {contents.map(s => (
+          <section key={s.id} id={anchor(s.id)} className="scroll-mt-24">
+            <h4 className="text-lg font-semibold text-zinc-100 tracking-tight mb-4">
+              {s.title}
+            </h4>
+            <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
+              {s.text}
+            </div>
+          </section>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function Poetry() {
+  const [active, setActive] = useState(0)
+
+  // Tab 0 is always the intro; poems follow in array order.
+  const tabs = [poetryIntro.label, ...poems.map(p => p.title)]
+  const poem = active > 0 ? poems[active - 1] : null
+
+  return (
+    <section id="poetry" className="py-28 px-6 bg-[#0c0c0c]">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mb-10"
+        >
+          <p className="text-xs font-semibold tracking-[0.2em] text-amber-500/80 uppercase mb-4">
+            Poetry
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight">
+            Poems &amp; a note on why
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="rounded-xl border border-white/[0.06] bg-[#111111] overflow-hidden"
+        >
+          {/* Sub-tabs */}
+          <div className="flex overflow-x-auto border-b border-white/[0.06]">
+            {tabs.map((label, i) => (
+              <button
+                key={label + i}
+                onClick={() => setActive(i)}
+                className={`shrink-0 px-5 py-3 text-xs font-medium transition-colors border-b-2 ${
+                  i === active
+                    ? 'border-amber-500/70 text-amber-400 bg-white/[0.02]'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.015]'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* Panel */}
+          <div className="px-6 py-8 md:px-10 md:py-10 min-h-[240px]">
+            {poem ? (
+              <article>
+                <header className="mb-6">
+                  <h3 className="text-xl font-semibold text-zinc-100 tracking-tight">
+                    {poem.title}
+                  </h3>
+                  {poem.byline && (
+                    <p className="text-xs text-zinc-500 mt-1">{poem.byline}</p>
+                  )}
+                  {poem.date && (
+                    <p className="text-xs text-zinc-600 mt-1">{poem.date}</p>
+                  )}
+                  {poem.note && (
+                    <p className="text-xs text-zinc-500 italic mt-2 max-w-prose">{poem.note}</p>
+                  )}
+                </header>
+
+                {poem.image && (
+                  <figure className="mb-8">
+                    <img
+                      src={poem.image}
+                      alt={poem.imageCaption ?? poem.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full max-w-2xl rounded-lg border border-white/[0.06]"
+                    />
+                    {poem.imageCaption && (
+                      <figcaption className="text-xs text-zinc-600 mt-2 italic">
+                        {poem.imageCaption}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
+
+                {poem.sections.length > 0
+                  ? <Collection poem={poem} />
+                  : (
+                    <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
+                      {poem.text}
+                    </div>
+                  )}
+
+                {/* Rights notice, rendered per work rather than typed into each
+                    poem file — so it cannot go missing from one. */}
+                <footer className="mt-12 pt-5 border-t border-white/[0.06]">
+                  <p className="text-[11px] text-zinc-600 leading-relaxed max-w-prose">
+                    {poem.copyright}
+                  </p>
+                </footer>
+              </article>
+            ) : poetryIntro.body.trim() ? (
+              <div className="text-sm md:text-[15px] text-zinc-400 leading-relaxed whitespace-pre-wrap max-w-prose">
+                {poetryIntro.body.trim()}
+              </div>
+            ) : (
+              <p className="text-sm text-zinc-600 italic">Coming soon.</p>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Speaking & Writing ───────────────────────────────────────────────────────
 function Speaking() {
   return (
@@ -863,6 +1054,7 @@ export default function App() {
         <About />
         <Work />
         <Writing />
+        <Poetry />
         <Speaking />
         <Contact />
       </main>
