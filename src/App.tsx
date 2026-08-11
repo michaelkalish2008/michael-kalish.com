@@ -16,8 +16,8 @@ function Nav() {
     { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
     { label: 'Writing', href: '#writing' },
-    { label: 'Poetry', href: '#poetry' },
     { label: 'Speaking', href: '#speaking' },
+    { label: 'Poetry', href: '#poetry' },
     { label: 'Contact', href: '#contact' },
   ]
   return (
@@ -1054,8 +1054,11 @@ export default function App() {
         <About />
         <Work />
         <Writing />
-        <Poetry />
         <Speaking />
+        {/* Poetry runs last: the collections are long, and anything below them
+            would be a scroll away. Contact still closes the page — it carries
+            the footer. */}
+        <Poetry />
         <Contact />
       </main>
     </div>
