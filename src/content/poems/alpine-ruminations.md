@@ -14,7 +14,7 @@ preface: Note from the author
 
 This book of poems, Alpine Ruminations, is an account of my 20s, during which time I took countless jobs across the fields of education and agriculture, including work as a commercial beekeeper, enologist assistant, herdsman, shepherd, cheesemaker and butcher (among many others) across France, Switzerland, Italy and the United States.
 
-The poem is an effort to express the cold moments of pain and beauty that I experienced while working alongside farmers, migrants, shop keepers, butchers, cheesemakers, people of various trades and the animals we worked with. 
+The book of poems is an effort to express the cold moments of pain and beauty that I experienced while working alongside farmers, migrants, shop keepers, butchers, cheesemakers, people of various trades and the animals we worked with. 
 
 When I look back, the hardest part of the journey was witnessing the treatment of certain people and animals caught in the gears of both traditional and modern agriculture. I hope the writing helps you and others find compassion and the courage to make a new start.
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
 import { poetryIntro, poems, type Poem } from './poems'
@@ -695,19 +695,33 @@ function Writing() {
 // so line breaks and indentation survive exactly as typed.
 
 // A `type: collection` file is a chapbook: its `#` headings became sections, so
-// it reads as a book — preface, index, then the poems in sequence. The index is
-// generated from the headings rather than authored, so it cannot fall out of
-// step with the contents the way a hand-kept table of contents does.
+// it reads as a book — preface, index, then one poem at a time, chosen from the
+// index or stepped through with the prev/next controls. The index is generated
+// from the headings rather than authored, so it cannot fall out of step with the
+// contents the way a hand-kept table of contents does.
+//
+// Showing a single poem rather than the whole sequence keeps a heading and its
+// verse together on screen: a reader who picks "Bee yard" gets that poem, not a
+// scroll position somewhere inside twenty-one of them.
 function Collection({ poem }: { poem: Poem }) {
   const preface = poem.sections.filter(s => s.isPreface)
   const contents = poem.sections.filter(s => !s.isPreface)
+
+  const [current, setCurrent] = useState(0)
+  const selected = contents[current]
+  const bodyRef = useRef<HTMLDivElement>(null)
 
   // Section ids are namespaced by collection so they cannot collide with the
   // page's own anchors (`#poetry`) or with another collection's poem titles.
   const anchor = (id: string) => `${poem.id}--${id}`
 
-  function jumpTo(id: string) {
-    document.getElementById(anchor(id))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // `nearest` so choosing from the index on a phone brings the poem up, while on
+  // a wide screen — where the poem is already in view — nothing moves.
+  function show(i: number) {
+    setCurrent(i)
+    requestAnimationFrame(() => {
+      bodyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    })
   }
 
   return (
@@ -723,7 +737,7 @@ function Collection({ poem }: { poem: Poem }) {
         </section>
       ))}
 
-      {/* Generated index */}
+      {/* Generated index, doubling as the poem selector */}
       <nav aria-label={`${poem.title} contents`} className="mb-12 border-y border-white/[0.06] py-5">
         <p className="text-xs font-semibold tracking-[0.2em] text-zinc-600 uppercase mb-3">
           Contents
@@ -731,12 +745,21 @@ function Collection({ poem }: { poem: Poem }) {
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1.5 list-none p-0 m-0">
           {contents.map((s, i) => (
             <li key={s.id} className="flex gap-2 items-baseline">
-              <span className="text-[10px] text-zinc-700 tabular-nums shrink-0 w-5 text-right">
+              <span
+                className={`text-[10px] tabular-nums shrink-0 w-5 text-right ${
+                  i === current ? 'text-amber-500/70' : 'text-zinc-700'
+                }`}
+              >
                 {i + 1}
               </span>
               <button
-                onClick={() => jumpTo(s.id)}
-                className="text-left text-sm text-zinc-400 hover:text-amber-400 transition-colors"
+                onClick={() => show(i)}
+                aria-current={i === current ? 'true' : undefined}
+                className={`text-left text-sm transition-colors ${
+                  i === current
+                    ? 'text-amber-400'
+                    : 'text-zinc-400 hover:text-amber-400'
+                }`}
               >
                 {s.title}
               </button>
@@ -745,19 +768,39 @@ function Collection({ poem }: { poem: Poem }) {
         </ul>
       </nav>
 
-      {/* The poems, in sequence */}
-      <div className="space-y-12">
-        {contents.map(s => (
-          <section key={s.id} id={anchor(s.id)} className="scroll-mt-24">
+      {/* One poem at a time */}
+      {selected && (
+        <div ref={bodyRef} className="scroll-mt-24">
+          <section id={anchor(selected.id)}>
             <h4 className="text-lg font-semibold text-zinc-100 tracking-tight mb-4">
-              {s.title}
+              {selected.title}
             </h4>
             <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
-              {s.text}
+              {selected.text}
             </div>
           </section>
-        ))}
-      </div>
+
+          <div className="mt-10 flex items-center justify-between gap-4 text-xs">
+            <button
+              onClick={() => show(current - 1)}
+              disabled={current === 0}
+              className="text-zinc-500 hover:text-amber-400 transition-colors disabled:opacity-0 disabled:pointer-events-none"
+            >
+              ← {contents[current - 1]?.title}
+            </button>
+            <span className="text-[10px] text-zinc-700 tabular-nums shrink-0">
+              {current + 1} / {contents.length}
+            </span>
+            <button
+              onClick={() => show(current + 1)}
+              disabled={current === contents.length - 1}
+              className="text-right text-zinc-500 hover:text-amber-400 transition-colors disabled:opacity-0 disabled:pointer-events-none"
+            >
+              {contents[current + 1]?.title} →
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }
@@ -847,8 +890,10 @@ function Poetry() {
                   </figure>
                 )}
 
+                {/* Keyed so switching tabs starts the next collection at its
+                    first poem rather than inheriting the last one's position. */}
                 {poem.sections.length > 0
-                  ? <Collection poem={poem} />
+                  ? <Collection key={poem.id} poem={poem} />
                   : (
                     <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
                       {poem.text}
