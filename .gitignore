@@ -26,3 +26,6 @@ dist-ssr
 
 # Original-resolution source images, kept out of the bundle and out of git.
 raw-assets
+
+# Source material for essays in progress. Never shipped, never committed.
+.reference
