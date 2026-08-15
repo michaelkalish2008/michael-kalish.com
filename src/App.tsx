@@ -97,7 +97,9 @@ function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      {/* max-w-5xl, not 4xl: the headline is two full sentences and wraps to
+          four lines in the narrower container. */}
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6"
           initial={{ opacity: 0, y: 12 }}
@@ -119,10 +121,10 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <span className="text-zinc-100">Building AI at scale.</span>
+          <span className="text-zinc-100">I build production AI systems.</span>
           <br />
           <span className="bg-gradient-to-r from-cyan-400 to-sky-300 bg-clip-text text-transparent">
-            Philosophizing about it on the side.
+            And the instruments that measure them.
           </span>
         </motion.h1>
 
@@ -132,9 +134,9 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
         >
-          Professionally, I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
-          and data science infrastructure at scale. On the side, I write about what language models are
-          actually doing when they generate text — through the lens of 20th-century existential phenomenology.
+          Multi-agent pipelines, RAG-based agentic workflows, and data science infrastructure at scale.
+          Independently, I build instruments for measuring what those models actually do — and publish
+          the measurements.
         </motion.p>
 
         <motion.div
@@ -144,10 +146,12 @@ function Hero() {
           transition={{ duration: 0.5, delay: 0.45 }}
         >
           <a
-            href="#writing"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors duration-200 text-sm"
+            href="https://ai-interpretability.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-colors duration-200 text-sm no-underline"
           >
-            Read the Writing →
+            See what it measures →
           </a>
           <a
             href="#contact"
@@ -199,10 +203,12 @@ function About() {
             </div>
 
             <div className="border-l-2 border-cyan-500/40 pl-4">
-              <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent · Recreational</p>
+              <p className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase mb-2">Independent Research</p>
               <p>
-                I enjoy reading existential phenomenology and applying 20th-century continental
-                philosophy to interpreting Transformer Architecture. See{' '}
+                I build hif, an open-source CLI for measuring what a language model does, and
+                publish the profiles it produces — 15 models, every measurement in its own unit.
+                The interpretive framing comes from 20th-century continental philosophy applied
+                to transformer architecture. See{' '}
                 <a
                   href="https://ai-interpretability.com"
                   target="_blank"
@@ -380,10 +386,106 @@ function EinsteinTrace() {
 }
 
 // ─── Work ─────────────────────────────────────────────────────────────────────
+// The role chips are a filter, not a claim. Six job titles asserted up front
+// read as no specialty; six that retrieve their own evidence on demand do not —
+// a reader hiring for one narrows to it and sees what actually backs it.
+
+const ROLES = [
+  'Applied Scientist',
+  'Data Scientist',
+  'Technical Program Manager',
+  'AI Educator / Speaker',
+  'Intelligence Analyst',
+  'Forward Deployed Engineer',
+] as const
+
+type Role = (typeof ROLES)[number]
+
+// What backs a role from outside this section, shown when it is selected —
+// otherwise filtering to "AI Educator / Speaker" hides the keynote and the
+// essays, which are the strongest things it has.
+const ROLE_NOTE: Record<Role, string> = {
+  'Applied Scientist':
+    'The instrument and its corpus are open — every measurement below is checkable at ai-interpretability.com.',
+  'Data Scientist':
+    'Statistical sampling through to LLM systems; the classical half is under Professional Work.',
+  'Technical Program Manager':
+    'Cross-functional delivery, end to end: engineers, SMEs, and operations.',
+  'AI Educator / Speaker':
+    'Also under Speaking — the Legal Innovators keynote and Uber Tech Talks. Under Writing — six essays.',
+  'Intelligence Analyst':
+    'Sampling, structured labeling, trend reporting — and in hif the tradecraft is explicit: every number names its source, absence is never filled in, and no verdict is attached.',
+  'Forward Deployed Engineer':
+    'Shipped into internal customer teams. hif runs on a laptop with no account and no hosted component.',
+}
+
+type WorkCard = {
+  id: string
+  group: 'research' | 'professional'
+  eyebrow: string
+  title: string
+  lede?: string
+  body: string
+  tags: string[]
+  roles: Role[]
+  visual?: 'einstein'
+  ctas?: { label: string; href: string; primary?: boolean }[]
+  award?: string
+}
+
+const WORK: WorkCard[] = [
+  {
+    id: 'hif',
+    group: 'research',
+    eyebrow: 'Independent Research · Open Source',
+    title: 'hif — Behavioral Interpretability',
+    lede: 'Reading the behavioral surface of language models — not their weights.',
+    body:
+      'A multi-year research program measuring language models from the outside: treating a model as a function from prompts to output distributions, and characterizing that function systematically across open-weight and frontier API models. It began as public philosophy essays, grew into a formal measurement framework, and now ships as an open-source CLI with a published corpus of 15 models. Every measurement is reported in its own unit — nothing is normalised into a score, and nothing is compared against a threshold.',
+    tags: ['Python', 'HuggingFace', 'PyTorch', 'Shannon Entropy', 'JS Divergence', 'DistilBERT', 'GPT-5', 'Claude', 'Gemini', 'MIT'],
+    roles: ['Applied Scientist', 'Data Scientist', 'Intelligence Analyst', 'Forward Deployed Engineer'],
+    visual: 'einstein',
+    ctas: [
+      { label: 'Explore the measurements →', href: 'https://ai-interpretability.com', primary: true },
+      { label: 'View source →', href: 'https://github.com/michaelkalish2008/hif' },
+    ],
+  },
+  {
+    id: 'enablement',
+    group: 'professional',
+    eyebrow: 'Production · Uber',
+    title: 'AI Enablement Infrastructure',
+    body:
+      'Built and maintain the DS/AI educational onboarding resource used by 1,000+ data scientists across Uber. Led cross-functional teams delivering end-to-end MVPs for AI automation across Ethics, Compliance, and Security.',
+    tags: ['LangChain', 'LLMs', 'Python', 'Education'],
+    roles: ['AI Educator / Speaker', 'Technical Program Manager', 'Forward Deployed Engineer'],
+    award: '#OneUber Award Finalist · 2025',
+  },
+  {
+    id: 'intelligence',
+    group: 'professional',
+    eyebrow: 'Production · Uber',
+    title: 'RAG-Based Intelligence Platform',
+    body:
+      'Lead data scientist on a cross-functional team (engineers, SMEs, operations). The approach was the subject of a keynote at Legal Innovators California, 2025 — statistical sampling, a multi-agent workflow for labeling and analyzing support tickets, and the trend reporting built on top. Current work applies LLMs, encoder models, clustering, and classical ML to turn unstructured text into structured, reviewable signal at scale.',
+    tags: ['LLMs', 'Encoders', 'Clustering', 'Multi-Agent', 'Statistical Sampling', 'RAG', 'NLP', 'SQL'],
+    roles: ['Data Scientist', 'Intelligence Analyst', 'Technical Program Manager', 'Applied Scientist'],
+  },
+]
+
 function Work() {
-  const tags1 = ['HuggingFace', 'PyTorch', 'Shannon Entropy', 'Nucleus Fraction', 'DistilBERT', 'GPT-2', 'Gemma', 'Llama', 'GPT-4.1', 'Gemini']
-  const tags2 = ['LangChain', 'LLMs', 'Python', 'Education']
-  const tags3 = ['RAG', 'LangGraph', 'Agentic AI', 'NLP', 'SQL']
+  const [role, setRole] = useState<Role | null>(null)
+
+  const visible = role ? WORK.filter(c => c.roles.includes(role)) : WORK
+  const research = visible.filter(c => c.group === 'research')
+  const professional = visible.filter(c => c.group === 'professional')
+
+  const chip = (active: boolean) =>
+    `text-xs px-3 py-1.5 rounded-full border transition-colors ${
+      active
+        ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-300'
+        : 'bg-[#1a1a1a] border-white/[0.06] text-zinc-500 hover:text-zinc-300 hover:border-white/[0.12]'
+    }`
 
   return (
     <section id="work" className="py-28 px-6 bg-[#0c0c0c]">
@@ -393,7 +495,7 @@ function Work() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUp}
-          className="mb-12"
+          className="mb-8"
         >
           <p className="text-xs font-semibold tracking-[0.2em] text-cyan-400 uppercase mb-4">
             Work
@@ -403,156 +505,173 @@ function Work() {
           </h2>
           <p className="text-sm text-zinc-600 mt-3">
             Independent research and professional work are listed separately below.
+            Filter by the role you are hiring for.
           </p>
         </motion.div>
 
-        {/* Independent Research header */}
-        <div className="flex items-center gap-4 mb-6">
-          <span className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase">Independent Research</span>
-          <div className="flex-1 h-px bg-cyan-500/15" />
-          <span className="text-[10px] text-zinc-700 uppercase tracking-widest">self-funded · unaffiliated</span>
-        </div>
-
-        {/* Featured card — Horizonal Interpretability */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="relative rounded-2xl border border-cyan-500/15 bg-[#111111] p-8 md:p-10 mb-8 overflow-hidden"
-        >
-          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-start">
-            <div>
-              <span className="inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase mb-3">
-                Research · Private
-              </span>
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-1 tracking-tight">
-                Behavioral Interpretability Research
-              </h3>
-              <p className="text-zinc-400 text-sm font-medium mb-4 mt-3">
-                Reading the behavioral surface of language models — not their weights.
-              </p>
-              <p className="text-zinc-400 leading-relaxed mb-2 text-sm md:text-base">
-                A multi-year research program measuring language models from the outside:
-                treating a model as a function from prompts to output distributions and
-                characterizing that function systematically across open-weight and frontier
-                API models. The work began as public philosophy essays, grew into a formal
-                measurement framework, and is now an active private research program.
-                Results and methods are available under NDA.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {tags1.map(t => (
-                  <span
-                    key={t}
-                    className="text-xs px-3 py-1 rounded-full bg-cyan-500/8 border border-cyan-500/15 text-cyan-300"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <div className="flex gap-3 flex-wrap">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium transition-colors duration-200"
-                >
-                  Inquire About the Research →
-                </a>
-              </div>
-            </div>
-
-            {/* Einstein trace visualization */}
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-widest text-zinc-600 uppercase">
-                Live analysis · GPT-2 · teacher-forced
-              </p>
-              <div className="rounded-xl bg-[#0a0a0a] border border-white/5 p-4">
-                <EinsteinTrace />
-              </div>
-              <p className="text-xs text-zinc-700 leading-relaxed">
-                <span className="text-rose-500/80">Rose</span> = hallucination token.
-                {' '}<span className="text-zinc-400">"his"</span> — model predicted "Physics" at 56%, forced to "his" at 2.7%.
-                {' '}<span className="text-zinc-400">"relativity"</span> — 75% confidence, factually wrong.
-                {' '}Bottom row: p90 nucleus size in tokens — how many the model needed to cover 90% of its probability mass.
-              </p>
-            </div>
+        {/* Role filter */}
+        <div className="mb-10">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] text-zinc-700 uppercase tracking-widest mr-1">
+              Filter by role
+            </span>
+            <button
+              onClick={() => setRole(null)}
+              aria-pressed={role === null}
+              className={chip(role === null)}
+            >
+              All
+            </button>
+            {ROLES.map(r => (
+              <button
+                key={r}
+                onClick={() => setRole(r === role ? null : r)}
+                aria-pressed={r === role}
+                className={chip(r === role)}
+              >
+                {r}
+              </button>
+            ))}
           </div>
-        </motion.div>
-
-        {/* Professional Work header */}
-        <div className="flex items-center gap-4 mt-12 mb-6">
-          <span className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase">Professional Work</span>
-          <div className="flex-1 h-px bg-amber-500/15" />
+          {role && (
+            <p className="text-xs text-zinc-500 leading-relaxed mt-4 max-w-3xl border-l-2 border-cyan-500/30 pl-4">
+              {ROLE_NOTE[role]}
+            </p>
+          )}
         </div>
 
-        {/* Two smaller cards */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Card 1 — AI Enablement */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="rounded-2xl border border-white/[0.06] bg-[#111111] p-7 flex flex-col"
-          >
-            <span className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
-              Production · Uber
-            </span>
-            <h3 className="text-xl font-bold text-zinc-100 mb-3 tracking-tight">
-              AI Enablement Infrastructure
-            </h3>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-5 flex-1">
-              Built and maintain the DS/AI educational onboarding resource used
-              by 1,000+ data scientists across Uber. Led cross-functional teams
-              delivering end-to-end MVPs for AI automation across Ethics,
-              Compliance, and Security.
-            </p>
-            <div className="flex flex-wrap gap-2 mb-5">
-              {tags2.map(t => (
-                <span
-                  key={t}
-                  className="text-xs px-3 py-1 rounded-full bg-[#1a1a1a] border border-white/[0.06] text-zinc-500"
-                >
-                  {t}
-                </span>
-              ))}
+        {/* Independent Research */}
+        {research.length > 0 && (
+          <>
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-xs font-semibold tracking-widest text-cyan-400/80 uppercase">Independent Research</span>
+              <div className="flex-1 h-px bg-cyan-500/15" />
+              <span className="text-[10px] text-zinc-700 uppercase tracking-widest">self-funded · unaffiliated</span>
             </div>
-            <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              #OneUber Award Finalist · 2025
-            </div>
-          </motion.div>
 
-          {/* Card 2 — RAG Legal */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="rounded-2xl border border-white/[0.06] bg-[#111111] p-7 flex flex-col"
-          >
-            <span className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
-              Production · Uber
-            </span>
-            <h3 className="text-xl font-bold text-zinc-100 mb-3 tracking-tight">
-              RAG-Based Intelligence Platform
-            </h3>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-5 flex-1">
-              Lead data scientist for cross-functional team (Engineers, SMEs,
-              Community Ops) building and deploying RAG-based agentic solutions
-              for global support ticket labeling and trending insights at Uber.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {tags3.map(t => (
-                <span
-                  key={t}
-                  className="text-xs px-3 py-1 rounded-full bg-[#1a1a1a] border border-white/[0.06] text-zinc-500"
+            {research.map(card => (
+              <motion.div
+                key={card.id}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="relative rounded-2xl border border-cyan-500/15 bg-[#111111] p-8 md:p-10 mb-8 overflow-hidden"
+              >
+                <div className="relative z-10 grid md:grid-cols-2 gap-8 items-start">
+                  <div>
+                    <span className="inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase mb-3">
+                      {card.eyebrow}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-1 tracking-tight">
+                      {card.title}
+                    </h3>
+                    {card.lede && (
+                      <p className="text-zinc-400 text-sm font-medium mb-4 mt-3">{card.lede}</p>
+                    )}
+                    <p className="text-zinc-400 leading-relaxed mb-2 text-sm md:text-base">
+                      {card.body}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {card.tags.map(t => (
+                        <span
+                          key={t}
+                          className="text-xs px-3 py-1 rounded-full bg-cyan-500/8 border border-cyan-500/15 text-cyan-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-3 flex-wrap">
+                      {card.ctas?.map(c => (
+                        <a
+                          key={c.href}
+                          href={c.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={
+                            c.primary
+                              ? 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium transition-colors duration-200 no-underline'
+                              : 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-200 text-sm font-medium transition-colors duration-200 no-underline'
+                          }
+                        >
+                          {c.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Einstein trace visualization */}
+                  {card.visual === 'einstein' && (
+                    <div className="flex flex-col gap-3">
+                      <p className="text-xs font-semibold tracking-widest text-zinc-600 uppercase">
+                        Live analysis · GPT-2 · teacher-forced
+                      </p>
+                      <div className="rounded-xl bg-[#0a0a0a] border border-white/5 p-4">
+                        <EinsteinTrace />
+                      </div>
+                      <p className="text-xs text-zinc-700 leading-relaxed">
+                        <span className="text-rose-500/80">Rose</span> = hallucination token.
+                        {' '}<span className="text-zinc-400">"his"</span> — model predicted "Physics" at 56%, forced to "his" at 2.7%.
+                        {' '}<span className="text-zinc-400">"relativity"</span> — 75% confidence, factually wrong.
+                        {' '}Bottom row: p90 nucleus size in tokens — how many the model needed to cover 90% of its probability mass.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </>
+        )}
+
+        {/* Professional Work */}
+        {professional.length > 0 && (
+          <>
+            <div className="flex items-center gap-4 mt-12 mb-6">
+              <span className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase">Professional Work</span>
+              <div className="flex-1 h-px bg-amber-500/15" />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {professional.map(card => (
+                <motion.div
+                  key={card.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="rounded-2xl border border-white/[0.06] bg-[#111111] p-7 flex flex-col"
                 >
-                  {t}
-                </span>
+                  <span className="text-xs font-semibold tracking-widest text-amber-400 uppercase mb-3">
+                    {card.eyebrow}
+                  </span>
+                  <h3 className="text-xl font-bold text-zinc-100 mb-3 tracking-tight">
+                    {card.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed mb-5 flex-1">
+                    {card.body}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {card.tags.map(t => (
+                      <span
+                        key={t}
+                        className="text-xs px-3 py-1 rounded-full bg-[#1a1a1a] border border-white/[0.06] text-zinc-500"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  {card.award && (
+                    <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold mt-5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                      {card.award}
+                    </div>
+                  )}
+                </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
+          </>
+        )}
       </div>
     </section>
   )
@@ -1040,8 +1159,8 @@ function Contact() {
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed mb-10">
             I'm open to speaking engagements and advisory conversations around
-            AI enablement and evaluation. For the interpretability research,
-            reach out — results are shared under NDA.
+            AI enablement and evaluation. The instrument and the published
+            profiles are open — see ai-interpretability.com.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
