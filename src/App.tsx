@@ -196,8 +196,8 @@ function About() {
               <p className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase mb-2">Professional</p>
               <p>
                 I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
-                and the educational infrastructure that helps 1,000+ data scientists work with AI
-                effectively. My applied work spans ethics, compliance, legal, and security domains.
+                and the educational infrastructure that helps thousands of people across hundreds
+                of teams work with AI effectively. My applied work spans ethics, compliance, legal, and security domains.
                 UC Berkeley MIDS, 2025.
               </p>
             </div>
@@ -441,7 +441,7 @@ const WORK: WorkCard[] = [
     title: 'hif — Behavioral Interpretability',
     lede: 'Reading the behavioral surface of language models — not their weights.',
     body:
-      'A multi-year research program measuring language models from the outside: treating a model as a function from prompts to output distributions, and characterizing that function systematically across open-weight and frontier API models. It began as public philosophy essays, grew into a formal measurement framework, and now ships as an open-source CLI with a published corpus of 15 models. Every measurement is reported in its own unit — nothing is normalised into a score, and nothing is compared against a threshold.',
+      'Independent work, built in a couple of months outside my day job. It measures language models from the outside: treating a model as a function from prompts to output distributions, and characterizing that function systematically across open-weight and frontier API models. It grew out of a series of public philosophy essays and now ships as an open-source CLI with a published corpus of 15 models. Every measurement is reported in its own unit — nothing is normalised into a score, and nothing is compared against a threshold.',
     tags: ['Python', 'HuggingFace', 'PyTorch', 'Shannon Entropy', 'JS Divergence', 'DistilBERT', 'GPT-5', 'Claude', 'Gemini', 'MIT'],
     roles: ['Applied Scientist', 'Data Scientist', 'Intelligence Analyst', 'Forward Deployed Engineer'],
     visual: 'einstein',
@@ -456,7 +456,7 @@ const WORK: WorkCard[] = [
     eyebrow: 'Production · Uber',
     title: 'AI Enablement Infrastructure',
     body:
-      'Built and maintain the DS/AI educational onboarding resource used by 1,000+ data scientists across Uber. Led cross-functional teams delivering end-to-end MVPs for AI automation across Ethics, Compliance, and Security.',
+      'Built and maintain the DS/AI educational onboarding resource used by thousands of people across hundreds of teams at Uber. Led cross-functional teams delivering end-to-end MVPs for AI automation across Ethics, Compliance, and Security.',
     tags: ['LangChain', 'LLMs', 'Python', 'Education'],
     roles: ['AI Educator / Speaker', 'Technical Program Manager', 'Forward Deployed Engineer'],
     award: '#OneUber Award Finalist · 2025',
