@@ -441,7 +441,7 @@ const WORK: WorkCard[] = [
     title: 'hif — Behavioral Interpretability',
     lede: 'Reading the behavioral surface of language models — not their weights.',
     body:
-      'Independent work, built in a couple of months outside my day job. It measures language models from the outside: treating a model as a function from prompts to output distributions, and characterizing that function systematically across open-weight and frontier API models. It grew out of a series of public philosophy essays and now ships as an open-source CLI with a published corpus of 15 models. Every measurement is reported in its own unit — nothing is normalised into a score, and nothing is compared against a threshold.',
+      'Measuring language models from the outside: treating a model as a function from prompts to output distributions, and characterizing that function systematically across open-weight and frontier API models. It grew out of a series of public philosophy essays and now ships as an open-source CLI with a published corpus of 15 models. Every measurement is reported in its own unit — nothing is normalised into a score, and nothing is compared against a threshold.',
     tags: ['Python', 'HuggingFace', 'PyTorch', 'Shannon Entropy', 'JS Divergence', 'DistilBERT', 'GPT-5', 'Claude', 'Gemini', 'MIT'],
     roles: ['Applied Scientist', 'Data Scientist', 'Intelligence Analyst', 'Forward Deployed Engineer'],
     visual: 'einstein',
