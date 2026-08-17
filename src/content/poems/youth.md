@@ -1,9 +1,9 @@
 ---
-title: Petals of Youth
+title: Youth
 date: June 2026
 note: Original from Nov 2007 | Inspired by Dylan Thomas
 order: 1
-id: petals-of-youth
+id: youth
 ---
 
 In the trellised air of my youth,
