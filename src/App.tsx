@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import { Mail, Globe, Code, ExternalLink, Menu, X } from 'lucide-react'
-import { poetryIntro, poems, type Poem } from './poems'
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -17,7 +16,7 @@ function Nav() {
     { label: 'Work', href: '#work' },
     { label: 'Writing', href: '#writing' },
     { label: 'Speaking', href: '#speaking' },
-    { label: 'Poetry', href: '#poetry' },
+    { label: 'Podcast', href: '#podcast' },
     { label: 'Contact', href: '#contact' },
   ]
   return (
@@ -107,7 +106,7 @@ function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <span className="text-xs font-semibold tracking-[0.2em] text-amber-500/70 uppercase px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/5">
-            Applied Data Scientist
+            Sr. Applied Scientist
           </span>
           <span className="text-zinc-700 hidden sm:inline">·</span>
           <span className="text-xs font-semibold tracking-[0.2em] text-cyan-400/80 uppercase px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5">
@@ -195,9 +194,11 @@ function About() {
             <div className="border-l-2 border-amber-500/40 pl-4">
               <p className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase mb-2">Professional</p>
               <p>
-                I build production AI systems — multi-agent pipelines, RAG-based agentic workflows,
-                and the educational infrastructure that helps thousands of people across hundreds
-                of teams work with AI effectively. My applied work spans ethics, compliance, legal, and security domains.
+                I'm a Senior Applied Scientist for Ethics, Compliance &amp; Security in Uber's
+                Community Legal Office, specializing in AI enablement and security support —
+                quantitative intelligence analysis. I build production AI systems — multi-agent
+                pipelines, RAG-based agentic workflows, and the educational infrastructure that helps
+                thousands of people across hundreds of teams work with AI effectively.
                 UC Berkeley MIDS, 2025.
               </p>
             </div>
@@ -807,240 +808,6 @@ function Writing() {
   )
 }
 
-// ─── Poetry ───────────────────────────────────────────────────────────────────
-// Content lives in src/content/poems/*.md — one markdown file per work, plus
-// _intro.md for the leading tab. src/poems.ts globs and parses them; nothing is
-// authored here. Poems render with `whitespace-pre-wrap` and no markdown pass,
-// so line breaks and indentation survive exactly as typed.
-
-// A `type: collection` file is a chapbook: its `#` headings became sections, so
-// it reads as a book — preface, index, then one poem at a time, chosen from the
-// index or stepped through with the prev/next controls. The index is generated
-// from the headings rather than authored, so it cannot fall out of step with the
-// contents the way a hand-kept table of contents does.
-//
-// Showing a single poem rather than the whole sequence keeps a heading and its
-// verse together on screen: a reader who picks "Bee yard" gets that poem, not a
-// scroll position somewhere inside twenty-one of them.
-function Collection({ poem }: { poem: Poem }) {
-  const preface = poem.sections.filter(s => s.isPreface)
-  const contents = poem.sections.filter(s => !s.isPreface)
-
-  const [current, setCurrent] = useState(0)
-  const selected = contents[current]
-  const bodyRef = useRef<HTMLDivElement>(null)
-
-  // Section ids are namespaced by collection so they cannot collide with the
-  // page's own anchors (`#poetry`) or with another collection's poem titles.
-  const anchor = (id: string) => `${poem.id}--${id}`
-
-  // `nearest` so choosing from the index on a phone brings the poem up, while on
-  // a wide screen — where the poem is already in view — nothing moves.
-  function show(i: number) {
-    setCurrent(i)
-    requestAnimationFrame(() => {
-      bodyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    })
-  }
-
-  return (
-    <>
-      {preface.map(s => (
-        <section key={s.id} className="mb-10">
-          <h4 className="text-xs font-semibold tracking-[0.2em] text-amber-500/70 uppercase mb-3">
-            {s.title}
-          </h4>
-          <div className="text-sm md:text-[15px] text-zinc-400 leading-relaxed whitespace-pre-wrap max-w-prose">
-            {s.text}
-          </div>
-        </section>
-      ))}
-
-      {/* Generated index, doubling as the poem selector */}
-      <nav aria-label={`${poem.title} contents`} className="mb-12 border-y border-white/[0.06] py-5">
-        <p className="text-xs font-semibold tracking-[0.2em] text-zinc-600 uppercase mb-3">
-          Contents
-        </p>
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1.5 list-none p-0 m-0">
-          {contents.map((s, i) => (
-            <li key={s.id} className="flex gap-2 items-baseline">
-              <span
-                className={`text-[10px] tabular-nums shrink-0 w-5 text-right ${
-                  i === current ? 'text-amber-500/70' : 'text-zinc-700'
-                }`}
-              >
-                {i + 1}
-              </span>
-              <button
-                onClick={() => show(i)}
-                aria-current={i === current ? 'true' : undefined}
-                className={`text-left text-sm transition-colors ${
-                  i === current
-                    ? 'text-amber-400'
-                    : 'text-zinc-400 hover:text-amber-400'
-                }`}
-              >
-                {s.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* One poem at a time */}
-      {selected && (
-        <div ref={bodyRef} className="scroll-mt-24">
-          <section id={anchor(selected.id)}>
-            <h4 className="text-lg font-semibold text-zinc-100 tracking-tight mb-4">
-              {selected.title}
-            </h4>
-            <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
-              {selected.text}
-            </div>
-          </section>
-
-          <div className="mt-10 flex items-center justify-between gap-4 text-xs">
-            <button
-              onClick={() => show(current - 1)}
-              disabled={current === 0}
-              className="text-zinc-500 hover:text-amber-400 transition-colors disabled:opacity-0 disabled:pointer-events-none"
-            >
-              ← {contents[current - 1]?.title}
-            </button>
-            <span className="text-[10px] text-zinc-700 tabular-nums shrink-0">
-              {current + 1} / {contents.length}
-            </span>
-            <button
-              onClick={() => show(current + 1)}
-              disabled={current === contents.length - 1}
-              className="text-right text-zinc-500 hover:text-amber-400 transition-colors disabled:opacity-0 disabled:pointer-events-none"
-            >
-              {contents[current + 1]?.title} →
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  )
-}
-
-function Poetry() {
-  const [active, setActive] = useState(0)
-
-  // Tab 0 is always the intro; poems follow in array order.
-  const tabs = [poetryIntro.label, ...poems.map(p => p.title)]
-  const poem = active > 0 ? poems[active - 1] : null
-
-  return (
-    <section id="poetry" className="py-28 px-6 bg-[#0c0c0c]">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="mb-10"
-        >
-          <p className="text-xs font-semibold tracking-[0.2em] text-amber-500/80 uppercase mb-4">
-            Poetry
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight">
-            Poems &amp; a note on why
-          </h2>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="rounded-xl border border-white/[0.06] bg-[#111111] overflow-hidden"
-        >
-          {/* Sub-tabs */}
-          <div className="flex overflow-x-auto border-b border-white/[0.06]">
-            {tabs.map((label, i) => (
-              <button
-                key={label + i}
-                onClick={() => setActive(i)}
-                className={`shrink-0 px-5 py-3 text-xs font-medium transition-colors border-b-2 ${
-                  i === active
-                    ? 'border-amber-500/70 text-amber-400 bg-white/[0.02]'
-                    : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.015]'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          {/* Panel */}
-          <div className="px-6 py-8 md:px-10 md:py-10 min-h-[240px]">
-            {poem ? (
-              <article>
-                <header className="mb-6">
-                  <h3 className="text-xl font-semibold text-zinc-100 tracking-tight">
-                    {poem.title}
-                  </h3>
-                  {poem.byline && (
-                    <p className="text-xs text-zinc-500 mt-1">{poem.byline}</p>
-                  )}
-                  {poem.date && (
-                    <p className="text-xs text-zinc-600 mt-1">{poem.date}</p>
-                  )}
-                  {poem.note && (
-                    <p className="text-xs text-zinc-500 italic mt-2 max-w-prose">{poem.note}</p>
-                  )}
-                </header>
-
-                {poem.image && (
-                  <figure className="mb-8">
-                    <img
-                      src={poem.image}
-                      alt={poem.imageCaption ?? poem.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full max-w-2xl rounded-lg border border-white/[0.06]"
-                    />
-                    {poem.imageCaption && (
-                      <figcaption className="text-xs text-zinc-600 mt-2 italic">
-                        {poem.imageCaption}
-                      </figcaption>
-                    )}
-                  </figure>
-                )}
-
-                {/* Keyed so switching tabs starts the next collection at its
-                    first poem rather than inheriting the last one's position. */}
-                {poem.sections.length > 0
-                  ? <Collection key={poem.id} poem={poem} />
-                  : (
-                    <div className="font-serif text-[15px] md:text-base text-zinc-300 leading-[1.9] whitespace-pre-wrap">
-                      {poem.text}
-                    </div>
-                  )}
-
-                {/* Rights notice, rendered per work rather than typed into each
-                    poem file — so it cannot go missing from one. */}
-                <footer className="mt-12 pt-5 border-t border-white/[0.06]">
-                  <p className="text-[11px] text-zinc-600 leading-relaxed max-w-prose">
-                    {poem.copyright}
-                  </p>
-                </footer>
-              </article>
-            ) : poetryIntro.body.trim() ? (
-              <div className="text-sm md:text-[15px] text-zinc-400 leading-relaxed whitespace-pre-wrap max-w-prose">
-                {poetryIntro.body.trim()}
-              </div>
-            ) : (
-              <p className="text-sm text-zinc-600 italic">Coming soon.</p>
-            )}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Speaking & Writing ───────────────────────────────────────────────────────
 function Speaking() {
   return (
@@ -1140,6 +907,182 @@ function Speaking() {
   )
 }
 
+// ─── Podcast ──────────────────────────────────────────────────────────────────
+// Episodes live on YouTube, Spotify and Apple Podcasts; this section introduces
+// the show and links out. A platform with an empty href renders as "soon"
+// rather than a dead link — fill each in as the show goes live there.
+//
+// The show is independent of any employer, and this page names one elsewhere,
+// so the disclaimer sits inside the section rather than in the footer.
+
+const SHOW_NAME = 'Questions for the Record'
+
+const SHOW_PLATFORMS: { label: string; href: string }[] = [
+  { label: 'YouTube', href: '' },
+  { label: 'Spotify', href: '' },
+  { label: 'Apple Podcasts', href: '' },
+]
+
+const SHOW_QUESTIONS = [
+  {
+    q: 'What do policymakers already get right about AI?',
+    note: 'The baseline, asked of every guest so it can be compared over time.',
+  },
+  {
+    q: 'Where is their understanding wrong or incomplete?',
+    note: 'Where practice and the public picture diverge.',
+  },
+  {
+    q: 'What questions should they be asking?',
+    note: 'The payoff — and the short clip each episode is cut down to.',
+  },
+]
+
+const SHOW_GUESTS = [
+  'Data & applied scientists, ML engineers',
+  'Product & program managers',
+  'Trust & safety, fraud and investigations',
+  'Researchers across technical and legal fields',
+  'Privacy engineers and civil-liberties technologists',
+]
+
+const SHOW_EMAIL = 'mtkalish@gmail.com'
+const mailto = (subject: string) =>
+  `mailto:${SHOW_EMAIL}?subject=${encodeURIComponent(`${SHOW_NAME} — ${subject}`)}`
+
+function Podcast() {
+  return (
+    <section id="podcast" className="py-28 px-6 bg-[#0c0c0c]">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mb-12 max-w-3xl"
+        >
+          <p className="text-xs font-semibold tracking-[0.2em] text-cyan-400 uppercase mb-4">
+            Podcast · In development
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight mb-5">
+            {SHOW_NAME}
+          </h2>
+          <p className="text-lg text-zinc-300 leading-relaxed mb-4">
+            What the people building and defending AI want lawmakers to know.
+          </p>
+          <p className="text-zinc-400 leading-relaxed">
+            A short, independent, nonpartisan interview show. Each episode is about fifteen minutes
+            with a practitioner — someone who builds, deploys, or defends AI systems — answering the
+            same three questions. The show doesn't argue for legislation; it equips the people
+            writing it to ask better questions.
+          </p>
+        </motion.div>
+
+        {/* The three questions */}
+        <motion.ol
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+          className="grid md:grid-cols-3 gap-4 mb-12 list-none p-0"
+        >
+          {SHOW_QUESTIONS.map((item, i) => (
+            <motion.li
+              key={item.q}
+              variants={fadeUp}
+              className={`rounded-xl border p-6 flex flex-col gap-3 ${
+                i === SHOW_QUESTIONS.length - 1
+                  ? 'border-cyan-500/20 bg-cyan-500/[0.04]'
+                  : 'border-white/[0.06] bg-[#111111]'
+              }`}
+            >
+              <span className="text-xs font-mono text-cyan-400/80">0{i + 1}</span>
+              <p className="text-zinc-100 font-semibold leading-snug">{item.q}</p>
+              <p className="text-xs text-zinc-500 leading-relaxed">{item.note}</p>
+            </motion.li>
+          ))}
+        </motion.ol>
+
+        <div className="grid md:grid-cols-2 gap-10 mb-12">
+          {/* Guests */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <p className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase mb-4">
+              Guests
+            </p>
+            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
+              People who do the work, not people who summarize it:
+            </p>
+            <ul className="space-y-1.5 mb-5">
+              {SHOW_GUESTS.map(g => (
+                <li key={g} className="flex items-start gap-2 text-sm text-zinc-400">
+                  <span className="text-amber-500/50 mt-1 shrink-0 text-[10px]">◆</span>
+                  {g}
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-zinc-500 leading-relaxed">
+              Camera-off is a standard option. Guests may appear under a role description instead
+              of their name, choose whether to name their employer, and review the cut before release.
+            </p>
+          </motion.div>
+
+          {/* Get involved */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <p className="text-xs font-semibold tracking-widest text-amber-500/70 uppercase mb-4">
+              Be a guest
+            </p>
+            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
+              If you build, deploy, or defend AI systems and have something lawmakers should hear,
+              send a line on your role and the angle you'd take.
+            </p>
+            <div className="flex mb-8">
+              <a
+                href={mailto('Guest application')}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium transition-colors duration-200 no-underline"
+              >
+                <Mail size={15} />
+                Apply to be a guest
+              </a>
+            </div>
+
+            <p className="text-xs font-semibold tracking-widest text-zinc-600 uppercase mb-3">
+              Listen
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SHOW_PLATFORMS.map(p =>
+                p.href ? (
+                  <a
+                    key={p.label}
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-300 hover:text-cyan-200 transition-colors no-underline"
+                  >
+                    {p.label}
+                    <ExternalLink size={11} />
+                  </a>
+                ) : (
+                  <span
+                    key={p.label}
+                    className="text-xs px-3 py-1.5 rounded-full border border-white/[0.06] bg-[#1a1a1a] text-zinc-600"
+                  >
+                    {p.label} · soon
+                  </span>
+                ),
+              )}
+            </div>
+          </motion.div>
+        </div>
+
+        <p className="text-[11px] text-zinc-600 leading-relaxed max-w-3xl border-t border-white/[0.06] pt-5">
+          {SHOW_NAME} is an independent production, unaffiliated with any employer. Views expressed
+          are the speakers' own and do not represent their employers.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 // ─── Contact ──────────────────────────────────────────────────────────────────
 function Contact() {
   return (
@@ -1219,10 +1162,7 @@ export default function App() {
         <Work />
         <Writing />
         <Speaking />
-        {/* Poetry runs last: the collections are long, and anything below them
-            would be a scroll away. Contact still closes the page — it carries
-            the footer. */}
-        <Poetry />
+        <Podcast />
         <Contact />
       </main>
     </div>

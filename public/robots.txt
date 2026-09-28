@@ -1,0 +1,20 @@
+# Search engines and AI assistants fetching a page on a user's behalf are
+# welcome. Crawlers that collect content for AI model training are not.
+# This is honored only by crawlers that choose to follow it.
+
+User-agent: GPTBot
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: meta-externalagent
+User-agent: cohere-training-data-crawler
+User-agent: Diffbot
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.michael-kalish.com/sitemap.xml
