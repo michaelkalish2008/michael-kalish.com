@@ -915,7 +915,9 @@ function Speaking() {
 // The show is independent of any employer, and this page names one elsewhere,
 // so the disclaimer sits inside the section rather than in the footer.
 
-const SHOW_NAME = 'Questions for the Record'
+// The show name carries the search terms; the channel (@whattoknowaboutai) is
+// kept broader so later series can sit alongside it.
+const SHOW_NAME = 'What Politicians Should Know About AI'
 
 const SHOW_PLATFORMS: { label: string; href: string }[] = [
   { label: 'YouTube', href: '' },
